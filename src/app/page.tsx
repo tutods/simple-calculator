@@ -51,10 +51,10 @@ export default function Home() {
     <main className="flex h-full items-center justify-center p-4 md:p-0">
       <div
         className={
-          'dark:shadow-bg-neutral-900 max-w-md rounded-2xl bg-white px-8 pb-24 pt-8 shadow-lg dark:bg-neutral-900'
+          'dark:shadow-bg-neutral-900 max-w-md rounded-2xl bg-white px-8 md:pb-24 md:pt-8 py-8 shadow-lg dark:bg-neutral-900'
         }
       >
-        <header className="mb-24 flex items-center justify-between gap-4">
+        <header className="md:mb-24 mb-7 flex items-center justify-between gap-4">
           <div className="flex items-center gap-2">
             <span className={'h-3 w-3 rounded-full bg-red-500'} />
             <span className={'h-3 w-3 rounded-full bg-yellow-500'} />
