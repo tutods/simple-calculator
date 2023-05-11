@@ -32,8 +32,8 @@ export const Button = ({
     <button
       {...props}
       className={clsx([
-        'h-20 w-20 text-3xl inline-flex items-center justify-center rounded-full',
-        'transition-all ease-in-out duration-300',
+        'inline-flex h-20 w-20 items-center justify-center rounded-full text-3xl',
+        'transition-all duration-300 ease-in-out',
         styles,
         className,
       ])}

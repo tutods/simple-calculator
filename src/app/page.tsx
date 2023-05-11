@@ -46,31 +46,31 @@ export default function Home() {
     <main className="flex h-full items-center justify-center p-4 md:p-0">
       <div
         className={
-          'rounded-2xl shadow-lg dark:shadow-bg-neutral-900 px-8 pb-24 pt-8 bg-white dark:bg-neutral-900 max-w-md'
+          'dark:shadow-bg-neutral-900 max-w-md rounded-2xl bg-white px-8 pb-24 pt-8 shadow-lg dark:bg-neutral-900'
         }
       >
         <header className="mb-24 flex items-center justify-between gap-4">
           <div className="flex items-center gap-2">
-            <span className={'w-3 h-3 rounded-full bg-red-500'} />
-            <span className={'w-3 h-3 rounded-full bg-yellow-500'} />
-            <span className={'w-3 h-3 rounded-full bg-green-500'} />
+            <span className={'h-3 w-3 rounded-full bg-red-500'} />
+            <span className={'h-3 w-3 rounded-full bg-yellow-500'} />
+            <span className={'h-3 w-3 rounded-full bg-green-500'} />
           </div>
 
           <button
             onClick={handleThemeChange}
-            className="p-2 bg-transparent inline-flex items-center justify-center rounded-full hover:bg-orange-500 hover:text-gray-100 transition-colors ease-in-out duration-300"
+            className="inline-flex items-center justify-center rounded-full bg-transparent p-2 transition-colors duration-300 ease-in-out hover:bg-orange-500 hover:text-gray-100"
           >
             <Icon className="h-6 w-6" />
           </button>
         </header>
 
-        <h1 className="font-bold text-3xl tracking-wide">
+        <h1 className="text-3xl font-bold tracking-wide">
           <span className="text-orange-500">C</span>alculator
         </h1>
 
-        <section className="my-16 w-full text-6xl text-right font-light">
+        <section className="my-16 w-full text-right text-6xl font-light">
           {!calc ? (
-            <div className="w-10 my-12 opacity-10 h-1 ml-auto rounded bg-gray-800 dark:bg-gray-200 animate-pulse" />
+            <div className="my-12 ml-auto h-1 w-10 animate-pulse rounded bg-gray-800 opacity-10 dark:bg-gray-200" />
           ) : (
             calc.total
           )}
@@ -82,7 +82,7 @@ export default function Home() {
             onClick={handleButtonClick}
             value="reset"
             variant="action"
-            className={'!w-[unset] !justify-start col-span-2 px-8 !rounded-2xl'}
+            className={'col-span-2 !w-[unset] !justify-start !rounded-2xl px-8'}
           >
             AC
           </Button>
@@ -139,7 +139,7 @@ export default function Home() {
           <Button
             onClick={handleButtonClick}
             value="0"
-            className={'!w-[unset] !justify-start col-span-2 px-8 !rounded-2xl'}
+            className={'col-span-2 !w-[unset] !justify-start !rounded-2xl px-8'}
           >
             0
           </Button>
