@@ -4,7 +4,7 @@ import { useTheme } from 'next-themes';
 import { Moon, SunDim } from '@phosphor-icons/react';
 import { Button } from '@/components/Button';
 import { MouseEvent, useState } from 'react';
-import { clearGlobCache } from '@typescript-eslint/typescript-estree/dist/parseSettings/resolveProjectList';
+import clsx from 'clsx';
 
 export default function Home() {
   const [calc, setCalc] = useState<string[]>([]);
@@ -23,7 +23,18 @@ export default function Home() {
     }
 
     if (value === '=') {
-      setCalc((prev) => [eval((prev ?? []).join(''))]);
+      setCalc((prev) => {
+        try {
+          const joinedValues = prev.join('') ?? '';
+
+          return [eval(joinedValues)];
+        } catch (error) {
+          console.error(error);
+          alert('Sorry, but occurred an error calculation the result.');
+
+          return [];
+        }
+      });
       return;
     }
 
@@ -51,7 +62,7 @@ export default function Home() {
     <main className="flex h-full items-center justify-center p-4 md:p-0">
       <div
         className={
-          'dark:shadow-bg-neutral-900 max-w-md rounded-2xl bg-white px-8 md:pb-24 md:pt-8 py-8 shadow-lg dark:bg-neutral-900'
+          'dark:shadow-bg-neutral-900 max-w-md flex-grow-0 rounded-2xl bg-white px-8 md:pb-24 md:pt-8 py-8 shadow-lg dark:bg-neutral-900'
         }
       >
         <header className="md:mb-24 mb-7 flex items-center justify-between gap-4">
@@ -73,8 +84,19 @@ export default function Home() {
           <span className="text-orange-500">C</span>alculator
         </h1>
 
-        <section className="my-16 w-full text-right text-6xl font-light">
-          {!!calc.length ? calc.join('') : 0}
+        <section
+          className={clsx([
+            'break-all my-16 w-full text-right font-light',
+            { 'text-4xl': calc.join('').length > 8 },
+            { 'text-2xl': calc.join('').length > 16 },
+            { 'text-6xl': calc.join('').length <= 8 },
+          ])}
+        >
+          {!!calc.length ? (
+            calc.join('')
+          ) : (
+            <span className="animate-pulse opacity-50">0</span>
+          )}
         </section>
 
         <section className="grid grid-cols-4 gap-6">
