@@ -86,10 +86,10 @@ export default function Home() {
 
         <section
           className={clsx([
-            'break-all my-16 w-full text-right font-light',
-            { 'text-4xl': calc.join('').length > 8 },
-            { 'text-2xl': calc.join('').length > 16 },
-            { 'text-6xl': calc.join('').length <= 8 },
+            'break-all my-8 md:my-16 w-full text-right font-light',
+            { 'text-2xl md:text-4xl': calc.join('').length > 8 },
+            { 'text-xl md:text-2xl': calc.join('').length > 16 },
+            { 'text-4xl md:text-6xl': calc.join('').length <= 8 },
           ])}
         >
           {!!calc.length ? (
