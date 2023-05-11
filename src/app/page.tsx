@@ -4,11 +4,10 @@ import { useTheme } from 'next-themes';
 import { Moon, SunDim } from '@phosphor-icons/react';
 import { Button } from '@/components/Button';
 import { MouseEvent, useState } from 'react';
+import { clearGlobCache } from '@typescript-eslint/typescript-estree/dist/parseSettings/resolveProjectList';
 
 export default function Home() {
-  const [calc, setCalc] = useState<
-    { current: string; total: string } | undefined
-  >();
+  const [calc, setCalc] = useState<string[]>([]);
   const { theme, setTheme } = useTheme();
 
   const handleThemeChange = () => setTheme(theme === 'dark' ? 'light' : 'dark');
@@ -18,28 +17,34 @@ export default function Home() {
   const handleButtonClick = (evt: MouseEvent<HTMLButtonElement>) => {
     const { value } = evt.currentTarget;
 
-    if (value === 'reset') {
-      // Reset state
-      setCalc(undefined);
+    if (value === 'clear') {
+      setCalc([]);
       return;
     }
 
     if (value === '=') {
-      // Handle equal
-      setCalc();
+      setCalc((prev) => [eval((prev ?? []).join(''))]);
       return;
     }
 
-    if (isNaN(Number(value))) {
-      // Handle operators
-      console.log(value, Number(value), isNaN(Number(value)));
+    if (value === '+/-') {
+      setCalc((prev) => {
+        const haveMinusAtStart = prev[0] === '-';
+
+        if (!!prev.length) {
+          if (!haveMinusAtStart) {
+            return ['-', ...prev];
+          }
+
+          return prev.slice(1);
+        }
+
+        return prev;
+      });
       return;
     }
 
-    // Handle numbers
-    setCalc((prev) => ({
-      ...prev,
-    }));
+    setCalc((prev) => [...prev, value]);
   };
 
   return (
@@ -69,22 +74,16 @@ export default function Home() {
         </h1>
 
         <section className="my-16 w-full text-right text-6xl font-light">
-          {!calc ? (
-            <div className="my-12 ml-auto h-1 w-10 animate-pulse rounded bg-gray-800 opacity-10 dark:bg-gray-200" />
-          ) : (
-            calc.total
-          )}
+          {!!calc.length ? calc.join('') : 0}
         </section>
 
         <section className="grid grid-cols-4 gap-6">
           {/* First Row */}
-          <Button
-            onClick={handleButtonClick}
-            value="reset"
-            variant="action"
-            className={'col-span-2 !w-[unset] !justify-start !rounded-2xl px-8'}
-          >
+          <Button onClick={handleButtonClick} value="clear" variant="action">
             AC
+          </Button>
+          <Button onClick={handleButtonClick} value="+/-" variant="action">
+            <sup>+</sup>/<sub>-</sub>
           </Button>
           <Button onClick={handleButtonClick} value="%" variant="action">
             %
@@ -143,7 +142,9 @@ export default function Home() {
           >
             0
           </Button>
-          <Button value=".">.</Button>
+          <Button onClick={handleButtonClick} value=".">
+            .
+          </Button>
           <Button onClick={handleButtonClick} value="=" variant="action">
             =
           </Button>
