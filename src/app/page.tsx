@@ -40,14 +40,16 @@ export default function Home() {
 
     if (value === '+/-') {
       setCalc((prev) => {
-        const haveMinusAtStart = prev[0] === '-';
-
         if (!!prev.length) {
-          if (!haveMinusAtStart) {
-            return ['-', ...prev];
+          if (prev[0] === '-') {
+            return prev.slice(1);
           }
 
-          return prev.slice(1);
+          if (prev[0].toString().startsWith('-')) {
+            return [prev[0].toString().replace('-', ''), ...prev.slice(1)];
+          }
+
+          return ['-', ...prev];
         }
 
         return prev;
